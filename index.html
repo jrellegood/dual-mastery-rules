@@ -73,21 +73,78 @@
         /* Navigation */
         nav {
             background: rgba(212, 175, 55, 0.9);
-            padding: 1rem 0;
+            backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px var(--shadow);
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation when merged with header */
+        nav.merged {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: transparent;
+            backdrop-filter: none;
+            box-shadow: none;
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        /* Hamburger button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: var(--text-dark);
+            border-radius: 5px;
+            border: 2px solid var(--primary-gold);
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            z-index: 101;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-gold);
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hamburger animation */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Desktop navigation */
+        .nav-links {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 2rem;
-            padding: 0 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-link {
@@ -98,6 +155,7 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            display: block;
         }
 
         .nav-link:hover {
@@ -105,6 +163,54 @@
             color: var(--primary-gold);
             border-color: var(--primary-gold);
             transform: translateY(-2px);
+        }
+
+        /* Mobile navigation */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(212, 175, 55, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+                padding: 6rem 2rem 2rem 2rem;
+                transition: left 0.3s ease;
+                gap: 0;
+                box-shadow: 2px 0 10px var(--shadow);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(44, 24, 16, 0.2);
+                border-radius: 0;
+                margin: 0;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+
+            .nav-link:hover {
+                transform: none;
+                background: rgba(44, 24, 16, 0.1);
+            }
+
+            /* Close menu when link is clicked */
+            .nav-link:active {
+                background: var(--text-dark);
+                color: var(--primary-gold);
+            }
         }
 
         /* Main Content */
@@ -270,18 +376,17 @@
                 font-size: 2.5rem;
             }
             
-            .nav-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            
             main {
                 padding: 2rem 1rem;
             }
             
             .section {
                 padding: 1.5rem;
+            }
+
+            .overview-grid,
+            .styles-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -317,15 +422,22 @@
         </div>
     </header>
 
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
-            <a href="#overview" class="nav-link" onclick="showSection('overview')">Overview</a>
-            <a href="#setup" class="nav-link" onclick="showSection('setup')">Setup & Components</a>
-            <a href="#gameplay" class="nav-link" onclick="showSection('gameplay')">Gameplay</a>
-            <a href="#mechanics" class="nav-link" onclick="showSection('mechanics')">Core Mechanics</a>
-            <a href="#fighting-styles" class="nav-link" onclick="showSection('fighting-styles')">Fighting Styles</a>
-            <a href="#bloodline" class="nav-link" onclick="showSection('bloodline')">Bloodline Legacy</a>
-            <a href="#errata" class="nav-link" onclick="showSection('errata')">Errata</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#overview" class="nav-link" onclick="showSection('overview'); closeMenu()">Overview</a></li>
+                <li><a href="#setup" class="nav-link" onclick="showSection('setup'); closeMenu()">Setup & Components</a></li>
+                <li><a href="#gameplay" class="nav-link" onclick="showSection('gameplay'); closeMenu()">Gameplay</a></li>
+                <li><a href="#mechanics" class="nav-link" onclick="showSection('mechanics'); closeMenu()">Core Mechanics</a></li>
+                <li><a href="#fighting-styles" class="nav-link" onclick="showSection('fighting-styles'); closeMenu()">Fighting Styles</a></li>
+                <li><a href="#bloodline" class="nav-link" onclick="showSection('bloodline'); closeMenu()">Bloodline Legacy</a></li>
+                <li><a href="#errata" class="nav-link" onclick="showSection('errata'); closeMenu()">Errata</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -554,8 +666,10 @@
             <h3>Style Mastery</h3>
             <div class="rule-block">
                 <p><strong>Third Generation:</strong> When a style is passed down for three consecutive generations, it becomes "Mastered"</p>
-                <p><strong>Legacy Cards:</strong> Replace one standard card with a powerful Legacy Card</p>
+                <p><strong>Legacy Cards:</strong> When a style becomes Mastered, the player may choose any one standard card from that style to replace with any one Legacy Card from that style's available Legacy Cards</p>
+                <p><strong>Inheritance Path:</strong> A style can become Mastered whether you win or lose duels, as long as it's consistently passed down through three generations</p>
                 <p><strong>Power & Cost:</strong> Legacy Cards have powerful effects but meaningful drawbacks representing age</p>
+                <p><strong>Deck Limit:</strong> Only one Legacy Card per Mastered style may be in your deck at a time</p>
             </div>
 
             <h3>Champion's Burden</h3>
@@ -583,15 +697,22 @@
 
             <div class="errata-item">
                 <div class="errata-date">Latest Update: March 2025</div>
-                <h4>Initial Release</h4>
-                <p>No errata currently available. This section will be updated as needed with official rule clarifications and card corrections.</p>
+                <h4>Legacy Card & Style Inheritance FAQ</h4>
+                <p><strong>Q: Can I gain Legacy Cards even if I lose duels?</strong><br>
+                A: Yes! Legacy Cards are gained when a style becomes "Mastered" after being passed down for three consecutive generations, regardless of win/loss record. A family can perfect their ancestral techniques through practice and inheritance, not just victory.</p>
+                
+                <p><strong>Q: When exactly do I replace a card with a Legacy Card?</strong><br>
+                A: When a style becomes Mastered (3rd generation inheritance), you may immediately choose any standard card from that style to replace with any Legacy Card from that style's available options. This happens during deck construction between duels.</p>
+                
+                <p><strong>Q: Who chooses which style gets passed down to an Heir?</strong><br>
+                A: The defeated player chooses which of their two fighting styles to pass down to their Heir.</p>
             </div>
 
             <div class="errata-item">
                 <div class="errata-date">Future Updates</div>
                 <h4>Planned Clarifications</h4>
                 <ul>
-                    <li>Legacy card interaction timing</li>
+                    <li>Legacy card interaction timing during gameplay</li>
                     <li>Multiple stance change effects in one turn</li>
                     <li>Range restriction enforcement details</li>
                 </ul>
@@ -631,6 +752,36 @@
             window.location.hash = sectionId;
         }
 
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+            
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+
+        // Handle navbar merging with header
+        function handleNavbarPosition() {
+            const navbar = document.getElementById('navbar');
+            const header = document.querySelector('header');
+            const scrollY = window.scrollY;
+            const headerHeight = header.offsetHeight;
+
+            if (scrollY < headerHeight - 100) {
+                navbar.classList.add('merged');
+            } else {
+                navbar.classList.remove('merged');
+            }
+        }
+
         // Handle browser back/forward navigation
         window.addEventListener('hashchange', function() {
             const hash = window.location.hash.substring(1);
@@ -648,6 +799,21 @@
                 showSection(hash);
             } else {
                 showSection('overview');
+            }
+            handleNavbarPosition();
+        });
+
+        // Handle scroll events for navbar positioning
+        window.addEventListener('scroll', handleNavbarPosition);
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const isClickInsideNav = hamburger.contains(event.target) || navLinks.contains(event.target);
+            
+            if (!isClickInsideNav && navLinks.classList.contains('active')) {
+                closeMenu();
             }
         });
     </script>
