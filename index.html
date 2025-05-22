@@ -81,15 +81,22 @@
             transition: all 0.3s ease;
         }
 
-        /* Navigation when merged with header */
-        nav.merged {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: transparent;
-            backdrop-filter: none;
-            box-shadow: none;
+        /* Navigation when merged with header - desktop only */
+        @media (min-width: 769px) {
+            nav.merged {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: transparent;
+                backdrop-filter: none;
+                box-shadow: none;
+            }
+            
+            /* Adjust main content when nav is merged to prevent overlap */
+            body.nav-merged main {
+                padding-top: 1rem;
+            }
         }
 
         .nav-container {
@@ -218,6 +225,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
+            transition: padding-top 0.3s ease;
         }
 
         .section {
@@ -772,13 +780,23 @@
         function handleNavbarPosition() {
             const navbar = document.getElementById('navbar');
             const header = document.querySelector('header');
+            const body = document.body;
             const scrollY = window.scrollY;
             const headerHeight = header.offsetHeight;
 
-            if (scrollY < headerHeight - 100) {
-                navbar.classList.add('merged');
+            // Only apply merging on desktop
+            if (window.innerWidth > 768) {
+                if (scrollY < headerHeight - 100) {
+                    navbar.classList.add('merged');
+                    body.classList.add('nav-merged');
+                } else {
+                    navbar.classList.remove('merged');
+                    body.classList.remove('nav-merged');
+                }
             } else {
+                // Ensure no merging on mobile
                 navbar.classList.remove('merged');
+                body.classList.remove('nav-merged');
             }
         }
 
@@ -803,8 +821,9 @@
             handleNavbarPosition();
         });
 
-        // Handle scroll events for navbar positioning
+        // Handle scroll events for navbar positioning and window resize
         window.addEventListener('scroll', handleNavbarPosition);
+        window.addEventListener('resize', handleNavbarPosition);
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(event) {
