@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Mastery: The Bloodline Legacy</title>
+    <style>
+        :root {
+            --primary-gold: #d4af37;
+            --dark-gold: #b8941f;
+            --deep-red: #8b0000;
+            --parchment: #f4f1e8;
+            --dark-parchment: #e8e2d0;
+            --text-dark: #2c1810;
+            --text-light: #f4f1e8;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            background: linear-gradient(135deg, var(--parchment) 0%, var(--dark-parchment) 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--deep-red) 0%, #5c0000 100%);
+            color: var(--text-light);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="swords" patternUnits="userSpaceOnUse" width="50" height="50"><path d="M25 5 L25 45 M20 10 L30 10 M20 40 L30 40" stroke="rgba(212,175,55,0.1)" stroke-width="2" fill="none"/></pattern></defs><rect width="100" height="100" fill="url(%23swords)"/></svg>') repeat;
+            opacity: 0.2;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 3px 3px 6px var(--shadow);
+            color: var(--primary-gold);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(212, 175, 55, 0.9);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--text-dark);
+            color: var(--primary-gold);
+            border-color: var(--primary-gold);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-gold);
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, var(--primary-gold), var(--dark-gold), var(--primary-gold));
+            border-radius: 18px;
+            z-index: -1;
+        }
+
+        .section h2 {
+            color: var(--deep-red);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--primary-gold);
+            margin: 0.5rem auto;
+        }
+
+        .section h3 {
+            color: var(--deep-red);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            border-left: 4px solid var(--primary-gold);
+            padding-left: 1rem;
+        }
+
+        /* Game Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .overview-card {
+            background: linear-gradient(135deg, var(--parchment) 0%, rgba(212, 175, 55, 0.1) 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px solid var(--primary-gold);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .overview-card h4 {
+            color: var(--deep-red);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code blocks for rules */
+        .rule-block {
+            background: rgba(44, 24, 16, 0.05);
+            border-left: 4px solid var(--primary-gold);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Errata Section */
+        .errata-item {
+            background: rgba(255, 200, 200, 0.3);
+            border: 1px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .errata-date {
+            font-weight: bold;
+            color: var(--deep-red);
+            font-size: 0.9rem;
+        }
+
+        /* Fighting Styles Grid */
+        .styles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .style-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(212, 175, 55, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid var(--primary-gold);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .style-card:hover {
+            transform: scale(1.05);
+        }
+
+        .style-type {
+            background: var(--deep-red);
+            color: var(--text-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            main {
+                padding: 2rem 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hide sections initially for navigation */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section:target {
+            display: block;
+        }
+
+        #overview {
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Dual Mastery</h1>
+            <p class="subtitle">The Bloodline Legacy</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#overview" class="nav-link" onclick="showSection('overview')">Overview</a>
+            <a href="#setup" class="nav-link" onclick="showSection('setup')">Setup & Components</a>
+            <a href="#gameplay" class="nav-link" onclick="showSection('gameplay')">Gameplay</a>
+            <a href="#mechanics" class="nav-link" onclick="showSection('mechanics')">Core Mechanics</a>
+            <a href="#fighting-styles" class="nav-link" onclick="showSection('fighting-styles')">Fighting Styles</a>
+            <a href="#bloodline" class="nav-link" onclick="showSection('bloodline')">Bloodline Legacy</a>
+            <a href="#errata" class="nav-link" onclick="showSection('errata')">Errata</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <h2>Game Overview</h2>
+            <p>Dual Mastery is a tactical card game where players combine two different fighting styles to create a unique deck. Players use stance-based combat, resource management, and strategic planning to reduce their opponent's health to zero. The Bloodline Legacy variant adds a generational element where fighting styles evolve through succession.</p>
+            
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h4>🎯 Players</h4>
+                    <p>2 players in competitive duels, or cooperative trials against automated enemies</p>
+                </div>
+                <div class="overview-card">
+                    <h4>⏱️ Play Time</h4>
+                    <p>15-30 minutes per duel, with ongoing bloodline campaigns</p>
+                </div>
+                <div class="overview-card">
+                    <h4>🎲 Age</h4>
+                    <p>12+ (tactical complexity and thematic content)</p>
+                </div>
+                <div class="overview-card">
+                    <h4>⚔️ Complexity</h4>
+                    <p>Medium-High strategic depth with accessible core mechanics</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup & Components Section -->
+        <section id="setup" class="section">
+            <h2>Setup & Components</h2>
+            
+            <h3>Components</h3>
+            <ul>
+                <li>6+ style decks (8 cards each)</li>
+                <li>Legacy cards for each style (3 cards each)</li>
+                <li>Focus dice (d4, d6, d8, d10, d12)</li>
+                <li>Health trackers</li>
+                <li>Focus tokens</li>
+                <li>Range tracking marker</li>
+                <li>Bloodline Legacy tracking sheet</li>
+            </ul>
+
+            <h3>Game Setup</h3>
+            <ol>
+                <li>Each player selects 2 fighting styles (8 cards each) and combines them into a 16-card deck</li>
+                <li>Shuffle your deck and draw 5 cards to form your starting hand</li>
+                <li>Each player starts with 20 health</li>
+                <li>Determine the first player randomly</li>
+                <li>Set the Range Track to show both players at Close Range initially</li>
+            </ol>
+
+            <h3>Game Area</h3>
+            <ul>
+                <li><strong>Hand:</strong> Cards you can play</li>
+                <li><strong>Focus Area:</strong> Cards placed face-down as resources</li>
+                <li><strong>Stance Area:</strong> Your active stance card (if any)</li>
+                <li><strong>Meditation Zone:</strong> Discard pile</li>
+                <li><strong>Range Track:</strong> Token showing relative positioning (Close or Far Range)</li>
+                <li><strong>Bloodline Record:</strong> Tracks style inheritance and mastery across generations</li>
+            </ul>
+        </section>
+
+        <!-- Gameplay Section -->
+        <section id="gameplay" class="section">
+            <h2>Turn Sequence</h2>
+
+            <h3>1. Beginning Phase</h3>
+            <p>Draw a card (maximum hand size is 7)</p>
+
+            <h3>2. Focus Phase</h3>
+            <p>You may place any number of cards from your hand face-down in your Focus area. Each Focus card has an associated die (d4, d6, d8, d10, d12).</p>
+
+            <h3>3. Action Phase</h3>
+            <ul>
+                <li>Roll all your Focus dice to generate energy</li>
+                <li>Spend energy to play cards from your hand</li>
+                <li>You may change range once by spending 1 energy (unless modified by card effects)</li>
+                <li>Apply any stance advantages/disadvantages and range modifiers</li>
+                <li>Resolve card effects</li>
+            </ul>
+
+            <h3>4. End Phase</h3>
+            <ul>
+                <li>Used Focus cards go to your Meditation Zone</li>
+                <li>You may bank up to 2 unused energy as "Focused Energy" for your next turn</li>
+                <li>Resolve any "end of turn" effects</li>
+                <li>Play passes to your opponent</li>
+            </ul>
+
+            <h3>Winning Conditions</h3>
+            <ul>
+                <li>Reduce your opponent's health to 0</li>
+                <li>If a player cannot draw a card when required, they lose</li>
+            </ul>
+        </section>
+
+        <!-- Core Mechanics Section -->
+        <section id="mechanics" class="section">
+            <h2>Core Mechanics</h2>
+
+            <h3>Focus System</h3>
+            <div class="rule-block">
+                <p><strong>Energy Generation:</strong> Cards placed face-down as Focus generate energy when their associated dice are rolled.</p>
+                <p><strong>Banking Energy:</strong> Up to 2 unused energy can be saved as "Focused Energy" for next turn.</p>
+                <p><strong>Used Focus:</strong> Goes to Meditation (discard pile) after use.</p>
+            </div>
+
+            <h3>Stance Advantage System</h3>
+            <p>Rock-paper-scissors relationship between three stance types:</p>
+            <ul>
+                <li><strong>Aggressive (Red)</strong> beats <strong>Evasive (Green)</strong></li>
+                <li><strong>Defensive (Blue)</strong> beats <strong>Aggressive (Red)</strong></li>
+                <li><strong>Evasive (Green)</strong> beats <strong>Defensive (Blue)</strong></li>
+            </ul>
+            <div class="rule-block">
+                <p><strong>Advantage:</strong> Deal +1 damage when attacking</p>
+                <p><strong>Disadvantage:</strong> Opponent draws a card</p>
+            </div>
+
+            <h3>Range System</h3>
+            <p>Two positions: Close Range and Far Range</p>
+            <ul>
+                <li><strong>Close Range Specialists:</strong> +1 damage at Close Range</li>
+                <li><strong>Far Range Specialists:</strong> +1 damage at Far Range</li>
+                <li><strong>Range Changes:</strong> Usually cost 1 energy unless modified</li>
+            </ul>
+
+            <h3>Mastery System</h3>
+            <div class="rule-block">
+                <p><strong>Master Effects:</strong> Trigger when you've played 2+ cards of the same style in a turn</p>
+                <p>Creates strategic tension between specialization and versatility</p>
+            </div>
+        </section>
+
+        <!-- Fighting Styles Section -->
+        <section id="fighting-styles" class="section">
+            <h2>Fighting Styles</h2>
+
+            <h3>Martial Disciplines</h3>
+            <div class="styles-grid">
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Longsword</h4>
+                    <p>Balanced offense/defense with stance switching. Close Range specialist with tactical versatility.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Battle Axe</h4>
+                    <p>Offensive power with momentum building. Devastating Close Range attacks that build over time.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Bow</h4>
+                    <p>Range advantage and precision. Far Range specialist with positioning mechanics.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Rapier & Dagger</h4>
+                    <p>Technical, combo-oriented with precision mechanics. Flexible range with quick reactions.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Spear</h4>
+                    <p>Zone control and reach manipulation. Flexible range with area control tactics.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Martial</span>
+                    <h4>Thrown Weapons</h4>
+                    <p>Resource management and sustained pressure. Far Range specialist with arsenal mechanics.</p>
+                </div>
+            </div>
+
+            <h3>Magical Approaches</h3>
+            <div class="styles-grid">
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Water Magic</h4>
+                    <p>Adaptive, reactive style with flow-based mechanics. Flexible range with energy redirection.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Fire Magic</h4>
+                    <p>Aggressive damage over time with heat building. Far Range specialist with escalating power.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Earth Magic</h4>
+                    <p>Defensive control with stability mechanics. Close Range specialist with territorial effects.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Lightning Magic</h4>
+                    <p>Fast, reactive with charge mechanics. Far Range specialist with burst damage.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Shadow Magic</h4>
+                    <p>Deceptive control with information manipulation. Flexible range with setup mechanics.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Blood Magic</h4>
+                    <p>Risk-reward sacrifice mechanics with vitality system. Flexible range with powerful effects.</p>
+                </div>
+                <div class="style-card">
+                    <span class="style-type">Magical</span>
+                    <h4>Frost Magic</h4>
+                    <p>Control-oriented with area denial. Far Range specialist with restriction mechanics.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bloodline Legacy Section -->
+        <section id="bloodline" class="section">
+            <h2>Bloodline Legacy System</h2>
+
+            <h3>Generational Inheritance</h3>
+            <ul>
+                <li><strong>Victory:</strong> Winner becomes "Champion" and retains both fighting styles</li>
+                <li><strong>Defeat:</strong> Create an "Heir" who inherits one style and adopts a new one</li>
+                <li><strong>Challenge:</strong> Heirs challenge Champions to reclaim family honor</li>
+            </ul>
+
+            <h3>Style Mastery</h3>
+            <div class="rule-block">
+                <p><strong>Third Generation:</strong> When a style is passed down for three consecutive generations, it becomes "Mastered"</p>
+                <p><strong>Legacy Cards:</strong> Replace one standard card with a powerful Legacy Card</p>
+                <p><strong>Power & Cost:</strong> Legacy Cards have powerful effects but meaningful drawbacks representing age</p>
+            </div>
+
+            <h3>Champion's Burden</h3>
+            <p>After winning 3 consecutive matches, Champions face additional challenges:</p>
+            <ul>
+                <li>Start with -2 health in subsequent matches</li>
+                <li>Draw one fewer card in starting hand</li>
+                <li>Challenger may view one card in Champion's hand at start</li>
+            </ul>
+
+            <h3>Bloodline Record</h3>
+            <p>Track your family's journey across generations:</p>
+            <ul>
+                <li>Style inheritance patterns</li>
+                <li>Mastered fighting styles</li>
+                <li>Memorable duels and legendary moments</li>
+                <li>Family achievements and honors</li>
+            </ul>
+        </section>
+
+        <!-- Errata Section -->
+        <section id="errata" class="section">
+            <h2>Errata & Updates</h2>
+            <p>Official corrections and clarifications to game rules and cards.</p>
+
+            <div class="errata-item">
+                <div class="errata-date">Latest Update: March 2025</div>
+                <h4>Initial Release</h4>
+                <p>No errata currently available. This section will be updated as needed with official rule clarifications and card corrections.</p>
+            </div>
+
+            <div class="errata-item">
+                <div class="errata-date">Future Updates</div>
+                <h4>Planned Clarifications</h4>
+                <ul>
+                    <li>Legacy card interaction timing</li>
+                    <li>Multiple stance change effects in one turn</li>
+                    <li>Range restriction enforcement details</li>
+                </ul>
+            </div>
+
+            <h3>How to Submit Questions</h3>
+            <p>If you have rules questions or discover issues, please:</p>
+            <ul>
+                <li>Check this errata section first</li>
+                <li>Submit questions through our official channels</li>
+                <li>Include specific card names and situations</li>
+                <li>Reference turn sequence and game state</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Dual Mastery: The Bloodline Legacy. All rights reserved.</p>
+        <p>A tactical card game of honor, legacy, and mastery.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update URL hash
+            window.location.hash = sectionId;
+        }
+
+        // Handle browser back/forward navigation
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                showSection(hash);
+            } else {
+                showSection('overview');
+            }
+        });
+
+        // Show correct section on page load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                showSection(hash);
+            } else {
+                showSection('overview');
+            }
+        });
+    </script>
+</body>
+</html>
